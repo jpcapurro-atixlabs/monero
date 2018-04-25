@@ -1495,6 +1495,27 @@ namespace cryptonote
       END_KV_SERIALIZE_MAP()
     };
   };
+  struct COMMAND_RPC_GET_TRANSACTION_POOL_JSON
+  {
+    struct request
+    {
+      BEGIN_KV_SERIALIZE_MAP()
+      END_KV_SERIALIZE_MAP()
+    };
+
+    struct response
+    {
+      std::string status;
+      std::vector<std::string> tx_hashes;
+      bool untrusted;
+
+      BEGIN_KV_SERIALIZE_MAP()
+        KV_SERIALIZE(status)
+        KV_SERIALIZE(tx_hashes)
+        KV_SERIALIZE(untrusted)
+      END_KV_SERIALIZE_MAP()
+    };
+  };
 
   struct tx_backlog_entry
   {

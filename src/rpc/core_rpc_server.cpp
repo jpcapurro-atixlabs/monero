@@ -1002,6 +1002,17 @@ namespace cryptonote
     res.status = CORE_RPC_STATUS_OK;
     return true;
   }
+  bool core_rpc_server::on_get_transaction_pool_json(const COMMAND_RPC_GET_TRANSACTION_POOL_JSON::request& req, COMMAND_RPC_GET_TRANSACTION_POOL_JSON::response& res, bool request_has_rpc_origin)
+  {
+    std::vector<crypto::hash> hashes;
+    m_core.get_pool_transaction_hashes(hashes, !request_has_rpc_origin || !m_restricted);
+    for ( crypto::hash &single_hash : hashes){
+        std::string hash_as_str = epee::string_tools::pod_to_hex(single_hash);
+        res.tx_hashes.push_back(hash_as_str);
+    }
+    res.status = CORE_RPC_STATUS_OK;
+    return true;
+  }
   //------------------------------------------------------------------------------------------------------------------------------
   bool core_rpc_server::on_get_transaction_pool_stats(const COMMAND_RPC_GET_TRANSACTION_POOL_STATS::request& req, COMMAND_RPC_GET_TRANSACTION_POOL_STATS::response& res, bool request_has_rpc_origin)
   {
